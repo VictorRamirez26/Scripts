@@ -19,9 +19,20 @@ def desbloquear_sitio(sitio):
             if not any(variante in linea for variante in variantes_sitio):
                 archivo_hosts.write(linea)
 
+def study_mode(bool):
+
+    with open("paginas.txt", 'r+') as paginas:
+        if bool:
+            for pagina in paginas:
+                bloquear_sitio(pagina.strip())
+        else:
+            for pagina in paginas:
+                desbloquear_sitio(pagina.strip())           
+
+
 ventana = tk.Tk()
 ventana.title('Bloqueador de Sitios')
-ventana.geometry('600x400')  # Ancho x Alto
+ventana.geometry('400x200')  # Ancho x Alto
 
 sitio_entry = tk.Entry(ventana, width=50)
 sitio_entry.pack(pady=10)
@@ -31,5 +42,11 @@ bloquear_button.pack(pady=5)
 
 desbloquear_button = tk.Button(ventana, text='Desbloquear Sitio', command=lambda: desbloquear_sitio(sitio_entry.get()))
 desbloquear_button.pack(pady=5)
+
+study_button_on = tk.Button(ventana , text='Activar modo estudio' , command=lambda : study_mode(True))
+study_button_on.pack(pady=5)
+
+study_button_off = tk.Button(ventana , text='Desactivar modo estudio' , command=lambda : study_mode(False))
+study_button_off.pack(pady=5)
 
 ventana.mainloop()
